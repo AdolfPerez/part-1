@@ -1,3 +1,5 @@
-const Content = ({content}) => content.map(cnt => <p>{cnt[0]} {cnt[1]}</p>)
+import Part from "./Part"
+
+const Content = ({content}) => content.map((cnt, i) => <Part key={i} content={cnt}/>)
 
 export default Content
