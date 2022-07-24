@@ -7,16 +7,27 @@ const App = () =>  {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [all, setAll ] = useState(0)
+
+  const onClick = (state, setter) => {
+    setter(state+1)
+    setAll(all+1)
+  }
 
   return (
     <>
       <h2>give feedback</h2>
       <div>
-        <button onClick={() => setGood(good+1)}>good</button>
-        <button onClick={() => setNeutral(neutral+1)}>neutral</button>
-        <button onClick={() => setBad(bad+1)}>bad</button>
+        <button onClick={() => onClick(good, setGood)}>good</button>
+        <button onClick={() => onClick(neutral, setNeutral)}>neutral</button>
+        <button onClick={() => onClick(bad, setBad)}>bad</button>
       </div>
-      <Statistics collectedData={{good, neutral, bad}} />
+      <h2>statistics</h2>
+        {
+          all ?
+          <Statistics collectedData={{good, neutral, bad, all}} /> : 
+          <p>No feedback given</p>
+        }
     </>
   )
 }
