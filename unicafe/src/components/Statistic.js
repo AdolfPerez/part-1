@@ -1,3 +1,7 @@
-const Statistic = props => <p>{props.text} {props.value}</p>
+const Statistic = props =>
+<tr> 
+  <td> {props.text} </td> 
+  <td> {props.value} </td> 
+</tr>
 
 export default Statistic
