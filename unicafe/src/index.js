@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client"
 import { useState } from "react"
+import Statistics from './components/Statistics'
 
 const App = () =>  {
   // save clicks of each button to its own state
@@ -15,13 +16,7 @@ const App = () =>  {
         <button onClick={() => setNeutral(neutral+1)}>neutral</button>
         <button onClick={() => setBad(bad+1)}>bad</button>
       </div>
-      <h2>statistics</h2>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {good+neutral+bad}</p>
-        <p>average {(good - bad)/((good + neutral + bad)||1)}</p>
-        <p>positive {((good/((good + neutral + bad)||1))*100) + ' %'}</p>        
+      <Statistics collectedData={{good, neutral, bad}} />
     </>
   )
 }
