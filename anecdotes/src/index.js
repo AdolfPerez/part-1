@@ -5,12 +5,11 @@ const Button = ({onClick, text}) => <button onClick = {onClick}>{text}</button>
 
 const App = ({anecdotes}) => {
 
-  const randomPosition = Math.floor(Math.random()*anecdotes.length)
-
   const [state, setState] = useState(
     {
       points: Array.from(Array(anecdotes.length), ()=>0 ), 
-      selected: randomPosition
+      selected: Math.floor(Math.random()*anecdotes.length),
+      mostVoted: null
     }
   )
 
@@ -18,14 +17,22 @@ const App = ({anecdotes}) => {
 
   return (
     <>
+      <h2>Anecdote of the day</h2>
       {anecdotes[state.selected]}<br/>
       has {state.points[state.selected]} votes<br/>
       <Button onClick = {
         () => {
-          copy.points[copy.selected]+=1
-          setState(copy)
+          copy.points[copy.selected]+=1;
+          setState(copy);
+          state.mostVoted === null ?
+          setState({...copy, mostVoted: copy.selected}) :
+          copy.points[copy.mostVoted] < copy.points[copy.selected] ?
+            setState({...copy, mostVoted:copy.selected}) :
+            setState(copy)
         }} text = {'vote'} />
-      <Button onClick = {() => setState({...copy, selected: randomPosition})} text = {'next anecdote'} />
+      <Button onClick = {() => setState({...copy, selected: Math.floor(Math.random()*anecdotes.length)})} text = {'next anecdote'} />
+      <h2>Anecdote with most votes</h2>
+      {anecdotes[state.mostVoted]||'None'}
     </>
   )
 }
