@@ -1,18 +1,32 @@
 import { createRoot } from "react-dom/client"
 import { useState } from "react"
 
-const App = (props) => {
-  const [selected, setSelected] = useState(0)
+const Button = ({onClick, text}) => <button onClick = {onClick}>{text}</button>
 
-  const randomPosition = () => setSelected(Math.floor(Math.random()*anecdotes.length))
+const App = ({anecdotes}) => {
+
+  const randomPosition = Math.floor(Math.random()*anecdotes.length)
+
+  const [state, setState] = useState(
+    {
+      points: Array.from(Array(anecdotes.length), ()=>0 ), 
+      selected: randomPosition
+    }
+  )
+
+  const copy = {...state}
 
   return (
-    <div>
-      {props.anecdotes[selected]}
-      <div>
-        <button onClick={randomPosition}>next anecdote</button>
-      </div>
-    </div>
+    <>
+      {anecdotes[state.selected]}<br/>
+      has {state.points[state.selected]} votes<br/>
+      <Button onClick = {
+        () => {
+          copy.points[copy.selected]+=1
+          setState(copy)
+        }} text = {'vote'} />
+      <Button onClick = {() => setState({...copy, selected: randomPosition})} text = {'next anecdote'} />
+    </>
   )
 }
 
